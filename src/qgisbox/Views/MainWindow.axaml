@@ -38,7 +38,7 @@
         <!-- 返回键:主题色胶囊,醒目提示可返回 -->
         <Style Selector="Button.backbutton">
             <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
-            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
             <Setter Property="Height" Value="24" />
             <Setter Property="Padding" Value="10 0" />
             <Setter Property="Margin" Value="8 0 4 0" />
