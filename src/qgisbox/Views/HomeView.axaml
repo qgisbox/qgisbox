@@ -12,6 +12,8 @@
     <UserControl.Styles>
         <!-- 工具卡片:整卡可点,卡片式外观 -->
         <Style Selector="Button.toolcard">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
             <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
             <Setter Property="BorderThickness" Value="1" />
