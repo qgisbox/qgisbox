@@ -58,6 +58,7 @@
         <!-- 自定义标题栏:返回键 | 图标 | 标题 | 留白 | 最小化/最大化/关闭 -->
         <Grid Name="TitleBarHost"
               ColumnDefinitions="Auto,Auto,Auto,*"
+              Margin="0 4 0 0"
               Background="Transparent"
               WindowDecorationProperties.ElementRole="TitleBar">
             <Button Name="BackButton"
