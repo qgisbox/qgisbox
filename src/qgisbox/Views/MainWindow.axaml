@@ -34,6 +34,24 @@
         <Style Selector="Button.titlebar:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
         </Style>
+
+        <!-- 返回键:主题色胶囊,醒目提示可返回 -->
+        <Style Selector="Button.backbutton">
+            <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Padding" Value="12 0" />
+            <Setter Property="Margin" Value="8 0 4 0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="CornerRadius" Value="15" />
+        </Style>
+        <Style Selector="Button.backbutton:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="Button.backbutton:disabled">
+            <Setter Property="Opacity" Value="0.4" />
+        </Style>
     </win:FAAppWindow.Styles>
 
     <Grid RowDefinitions="Auto,*">
@@ -43,12 +61,17 @@
               Background="Transparent"
               WindowDecorationProperties.ElementRole="TitleBar">
             <Button Name="BackButton"
-                    Classes="titlebar"
+                    Classes="backbutton"
                     Click="BackButton_OnClick"
                     IsEnabled="{Binding CanGoBack}"
                     WindowDecorationProperties.ElementRole="User"
-                    ToolTip.Tip="返回">
-                <ui:FASymbolIcon Symbol="Back" FontSize="14" />
+                    ToolTip.Tip="返回上一页">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <ui:FASymbolIcon Symbol="Back" FontSize="12"
+                                     VerticalAlignment="Center" />
+                    <TextBlock Text="返回" FontSize="12"
+                               VerticalAlignment="Center" />
+                </StackPanel>
             </Button>
 
             <Image Grid.Column="1"
