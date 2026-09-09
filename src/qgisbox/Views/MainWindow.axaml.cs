@@ -33,6 +33,10 @@ public partial class MainWindow : FAAppWindow
             else
                 vm.Navigate(tag);
         };
+
+        // 启动时把导航栏选中项同步到初始页面(首页)
+        if (vm.CurrentTag is { } initialTag)
+            SelectNavItem(initialTag);
     }
 
     private void BackButton_OnClick(object? sender, RoutedEventArgs e)
