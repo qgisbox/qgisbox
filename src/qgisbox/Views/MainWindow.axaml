@@ -8,7 +8,7 @@
         mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
         x:Class="qgisbox.Views.MainWindow"
         x:DataType="vm:MainViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/logo.ico"
         Title="{Binding Title}"
         Width="1200" Height="800"
         MinWidth="760" MinHeight="560"
@@ -52,7 +52,7 @@
             </Button>
 
             <Image Grid.Column="1"
-                   Source="/Assets/avalonia-logo.ico"
+                   Source="/Assets/logo.png"
                    Width="18" Height="18"
                    Margin="4 0"
                    IsHitTestVisible="False"

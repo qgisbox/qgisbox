@@ -1,5 +1,7 @@
 # QGISBox 工具箱
 
+<p align="center"><img src="docs/logo.png" width="320" alt="QGISBox 工具箱 Logo" /></p>
+
 一个基于 Avalonia 的跨平台桌面工具框架,界面仿照 qfluentwidgets 的 FluentWindow 风格(自定义标题栏 + 左侧图标导航 + 卡片式内容区),便于快速集成各类桌面小工具。
 
 ## 功能特性
