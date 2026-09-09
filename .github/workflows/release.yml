@@ -1,0 +1,56 @@
+name: release
+
+# 推送 v* 标签时:构建 Windows/Linux/macOS 单文件并创建 GitHub Release
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rid: [win-x64, linux-x64, osx-x64, osx-arm64]
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: 发布单文件
+        run: >
+          dotnet publish src/qgisbox -c Release -r ${{ matrix.rid }}
+          --self-contained -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=none
+          -p:Version=${GITHUB_REF_NAME#v}
+          -o publish/${{ matrix.rid }}
+
+      - name: 打包
+        run: |
+          rm -f publish/${{ matrix.rid }}/*.pdb
+          cd publish/${{ matrix.rid }}
+          zip -r "../../qgisbox-${{ github.ref_name }}-${{ matrix.rid }}.zip" .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qgisbox-${{ matrix.rid }}
+          path: qgisbox-${{ github.ref_name }}-${{ matrix.rid }}.zip
+
+  release:
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.zip
+          generate_release_notes: true

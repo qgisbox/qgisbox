@@ -35,6 +35,15 @@ dotnet run --project src/qgisbox
 dotnet publish src/qgisbox -c Release -r win-x64 --self-contained
 ```
 
+## 发布
+
+推送 `v*` 标签即触发 CI 自动构建 Windows / Linux / macOS 单文件并创建 GitHub Release:
+
+```powershell
+git tag v0.1.0
+git push origin v0.1.0
+```
+
 ## 项目结构
 
 ```
