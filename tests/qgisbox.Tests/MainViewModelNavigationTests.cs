@@ -1,3 +1,4 @@
+using qgisbox.Models;
 using qgisbox.ViewModels;
 using Xunit;
 
@@ -87,6 +88,32 @@ public class MainViewModelNavigationTests
 
         Assert.Same(page, vm.CurrentPage);
         Assert.Equal("home", vm.CurrentTag);
+        Assert.False(vm.CanGoBack);
+    }
+
+    [Fact]
+    public void NavigateToTool_PushesHome_AndSetsToolName()
+    {
+        var vm = new MainViewModel();
+        var item = new ToolItem("JSON 格式化", "描述", null);
+
+        vm.NavigateToTool(item);
+
+        var page = Assert.IsType<ToolViewModel>(vm.CurrentPage);
+        Assert.Equal("tool", vm.CurrentTag);
+        Assert.Equal("JSON 格式化", page.ToolName);
+        Assert.True(vm.CanGoBack);
+    }
+
+    [Fact]
+    public void NavigateToTool_ThenGoBack_ReturnsHomeTag()
+    {
+        var vm = new MainViewModel();
+
+        vm.NavigateToTool(new ToolItem("Base64 编解码", "描述", null));
+
+        Assert.Equal("home", vm.GoBack());
+        Assert.IsType<HomeViewModel>(vm.CurrentPage);
         Assert.False(vm.CanGoBack);
     }
 }

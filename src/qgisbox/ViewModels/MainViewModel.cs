@@ -4,6 +4,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using qgisbox.Models;
 
 namespace qgisbox.ViewModels;
 
@@ -42,7 +43,7 @@ public partial class MainViewModel : ViewModelBase
 
         ViewModelBase? next = tag switch
         {
-            "home" => new HomeViewModel(),
+            "home" => new HomeViewModel(this),
             "tool" => new ToolViewModel(),
             "about" => new AboutViewModel(),
             _ => null
@@ -55,6 +56,19 @@ public partial class MainViewModel : ViewModelBase
 
         CurrentPage = next;
         CurrentTag = tag;
+        CanGoBack = _backStack.Count > 0;
+    }
+
+    /// <summary>
+    /// 从首页工具卡片进入工具详情占位页(带工具名),并把当前页压入返回栈。
+    /// </summary>
+    public void NavigateToTool(ToolItem item)
+    {
+        if (CurrentPage is not null && CurrentTag is not null)
+            _backStack.Push((CurrentTag, CurrentPage));
+
+        CurrentPage = new ToolViewModel { ToolName = item.Name };
+        CurrentTag = "tool";
         CanGoBack = _backStack.Count > 0;
     }
 

@@ -2,28 +2,126 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:models="using:qgisbox.Models"
              xmlns:vm="using:qgisbox.ViewModels"
              mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
              x:Class="qgisbox.Views.HomeView"
              x:DataType="vm:HomeViewModel">
 
+    <UserControl.Styles>
+        <!-- 工具卡片:整卡可点,卡片式外观 -->
+        <Style Selector="Button.toolcard">
+            <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="14" />
+            <Setter Property="Margin" Value="0 0 12 12" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Button.toolcard:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorSecondaryBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+        </Style>
+
+        <!-- 角标胶囊 -->
+        <Style Selector="Border.badge">
+            <Setter Property="CornerRadius" Value="3" />
+            <Setter Property="Padding" Value="6 2" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+        <Style Selector="Border.badge-new">
+            <Setter Property="Background" Value="{DynamicResource SystemFillColorSuccessBrush}" />
+        </Style>
+        <Style Selector="Border.badge-hot">
+            <Setter Property="Background" Value="{DynamicResource SystemFillColorCriticalBrush}" />
+        </Style>
+        <Style Selector="Border.badge TextBlock">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </UserControl.Styles>
+
     <ScrollViewer>
-        <Border Margin="16"
-                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
-                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                BorderThickness="1"
-                CornerRadius="8">
-            <StackPanel Margin="24" Spacing="12">
-                <TextBlock Text="首页" Theme="{StaticResource SubtitleTextBlockStyle}" />
-                <TextBlock Text="欢迎使用 QGISBox 工具箱,点击下方按钮体验 demo 交互。"
-                           TextWrapping="Wrap"
-                           Opacity="0.7" />
-                <StackPanel Orientation="Horizontal" Spacing="8" Margin="0 8 0 0">
-                    <Button Content="Demo 按钮 1" Command="{Binding ShowDemoCommand}" />
-                    <Button Content="Demo 按钮 2" Command="{Binding ShowSecondDemoCommand}" />
+        <StackPanel Margin="28 20 28 28" Spacing="24" MaxWidth="1200"
+                    HorizontalAlignment="Center">
+
+            <!-- 页头 -->
+            <StackPanel Spacing="8" Margin="0 8 0 0">
+                <StackPanel Orientation="Horizontal" Spacing="8"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="QGISBox"
+                               Theme="{StaticResource TitleTextBlockStyle}"
+                               Foreground="{DynamicResource AccentTextFillColorPrimaryBrush}" />
+                    <TextBlock Text="工具箱"
+                               Theme="{StaticResource TitleTextBlockStyle}" />
                 </StackPanel>
+                <TextBlock Text="开发者必备工具集,纯本地处理,数据不上传"
+                           HorizontalAlignment="Center"
+                           Opacity="0.6" />
             </StackPanel>
-        </Border>
+
+            <!-- 开发工具分类 -->
+            <StackPanel Spacing="12">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <ui:FASymbolIcon Symbol="Code" FontSize="16"
+                                     Foreground="{DynamicResource AccentTextFillColorPrimaryBrush}"
+                                     VerticalAlignment="Center" />
+                    <TextBlock Text="开发工具" FontSize="16" FontWeight="SemiBold"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+
+                <ItemsControl ItemsSource="{Binding Tools}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="4" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="models:ToolItem">
+                            <Button Classes="toolcard"
+                                    Command="{Binding $parent[ItemsControl].DataContext.OpenToolCommand}"
+                                    CommandParameter="{Binding}">
+                                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*">
+                                    <!-- 图标色块 -->
+                                    <Grid Width="40" Height="40">
+                                        <Border CornerRadius="6"
+                                                Background="{DynamicResource AccentFillColorDefaultBrush}"
+                                                Opacity="0.12" />
+                                        <ui:FASymbolIcon Symbol="{Binding EffectiveIcon}"
+                                                         FontSize="18"
+                                                         Foreground="{DynamicResource AccentTextFillColorPrimaryBrush}" />
+                                    </Grid>
+                                    <!-- 角标 -->
+                                    <Border Classes="badge" Grid.Column="1"
+                                            IsVisible="{Binding HasBadge}"
+                                            Classes.badge-new="{Binding IsNew}"
+                                            Classes.badge-hot="{Binding IsHot}">
+                                        <TextBlock Text="{Binding BadgeText}" />
+                                    </Border>
+                                    <!-- 标题与描述 -->
+                                    <StackPanel Grid.Row="1" Grid.ColumnSpan="2"
+                                                Spacing="4" Margin="0 12 0 0">
+                                        <TextBlock Text="{Binding Name}"
+                                                   FontWeight="SemiBold" FontSize="13" />
+                                        <TextBlock Text="{Binding Description}"
+                                                   FontSize="12" Opacity="0.6"
+                                                   TextWrapping="Wrap"
+                                                   MaxLines="2"
+                                                   TextTrimming="CharacterEllipsis" />
+                                    </StackPanel>
+                                </Grid>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </StackPanel>
     </ScrollViewer>
 
 </UserControl>
