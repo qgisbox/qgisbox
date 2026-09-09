@@ -2,4 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/qgisbox/qgisbox.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/qgisbox.Tests/qgisbox.Tests.csproj" />
+  </Folder>
 </Solution>

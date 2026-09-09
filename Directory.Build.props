@@ -1,0 +1,15 @@
+<Project>
+  <!-- 所有项目的公共构建属性(可被各 csproj 覆盖) -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <Version>0.1.0</Version>
+    <Authors>dbyte</Authors>
+    <Company>QGISBox</Company>
+    <Product>QGISBox 工具箱</Product>
+    <Description>基于 Avalonia 的跨平台桌面工具框架,仿 qfluentwidgets FluentWindow 风格</Description>
+  </PropertyGroup>
+</Project>

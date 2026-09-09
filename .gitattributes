@@ -1,0 +1,21 @@
+# 源码/文本文件:检出时按平台、提交时统一 LF
+* text=auto
+
+*.cs    text diff=csharp
+*.axaml text
+*.xaml  text
+*.csproj text
+*.slnx  text
+*.md    text
+*.json  text
+*.props text
+*.targets text
+*.yml   text
+*.yaml  text
+
+# 二进制资源
+*.ico   binary
+*.png   binary
+*.jpg   binary
+*.dll   binary
+*.exe   binary
