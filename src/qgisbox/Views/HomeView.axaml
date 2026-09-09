@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:qgisbox.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+             x:Class="qgisbox.Views.HomeView"
+             x:DataType="vm:HomeViewModel">
+
+    <ScrollViewer>
+        <Border Margin="16"
+                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="8">
+            <StackPanel Margin="24" Spacing="12">
+                <TextBlock Text="首页" Theme="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBlock Text="欢迎使用 QGISBox 工具箱,点击下方按钮体验 demo 交互。"
+                           TextWrapping="Wrap"
+                           Opacity="0.7" />
+                <StackPanel Orientation="Horizontal" Spacing="8" Margin="0 8 0 0">
+                    <Button Content="Demo 按钮 1" Command="{Binding ShowDemoCommand}" />
+                    <Button Content="Demo 按钮 2" Command="{Binding ShowSecondDemoCommand}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+
+</UserControl>

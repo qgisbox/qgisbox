@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:qgisbox.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+             x:Class="qgisbox.Views.ToolView"
+             x:DataType="vm:ToolViewModel">
+
+    <ScrollViewer>
+        <Border Margin="16"
+                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="8">
+            <StackPanel Margin="24" Spacing="12">
+                <TextBlock Text="工具" Theme="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBlock Text="工具页面的占位入口,后续在此集成具体工具。"
+                           TextWrapping="Wrap"
+                           Opacity="0.7" />
+                <StackPanel Orientation="Horizontal" Spacing="8" Margin="0 8 0 0">
+                    <Button Content="选择文件" Command="{Binding PickFilesCommand}" />
+                    <Button Content="批量处理" Command="{Binding RunTaskCommand}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+
+</UserControl>

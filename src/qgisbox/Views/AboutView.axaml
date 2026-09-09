@@ -1,0 +1,80 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:qgisbox.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="700"
+             x:Class="qgisbox.Views.AboutView"
+             x:DataType="vm:AboutViewModel">
+
+    <ScrollViewer>
+        <StackPanel Margin="16" Spacing="12">
+
+            <!-- 项目信息卡片 -->
+            <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                <StackPanel>
+                    <TextBlock Text="项目信息"
+                               Margin="16 12 16 8"
+                               Theme="{StaticResource SubtitleTextBlockStyle}" />
+                    <Rectangle Height="1" Fill="{DynamicResource DividerStrokeColorDefaultBrush}" />
+                    <StackPanel Margin="16" Spacing="10">
+                        <TextBlock Text="QGISBox"
+                                   Theme="{StaticResource TitleTextBlockStyle}"
+                                   HorizontalAlignment="Center" />
+                        <TextBlock Text="一个基于 Avalonia 的跨平台工具箱,采用 Fluent Design 风格界面,便于快速集成各类桌面工具。"
+                                   TextWrapping="Wrap"
+                                   HorizontalAlignment="Center"
+                                   Opacity="0.8" />
+                        <TextBlock Text="模块化设计,支持亮/暗主题与系统强调色,开箱即用。"
+                                   TextWrapping="Wrap"
+                                   HorizontalAlignment="Center"
+                                   Opacity="0.6" />
+                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="0 8 0 0">
+                            <Button Command="{Binding OpenGitHubCommand}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <ui:FAPathIcon Data="{StaticResource GithubIconGeometry}"
+                                                   Width="16" Height="16" />
+                                    <TextBlock Text="GitHub 项目地址" />
+                                </StackPanel>
+                            </Button>
+                            <Button Command="{Binding OpenDownloadCommand}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <ui:FASymbolIcon Symbol="Download" FontSize="16" />
+                                    <TextBlock Text="下载最新版本" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- 功能特性卡片 -->
+            <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                <StackPanel>
+                    <TextBlock Text="功能特性"
+                               Margin="16 12 16 8"
+                               Theme="{StaticResource SubtitleTextBlockStyle}" />
+                    <Rectangle Height="1" Fill="{DynamicResource DividerStrokeColorDefaultBrush}" />
+                    <ItemsControl ItemsSource="{Binding Features}" Margin="16">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <TextBlock Text="{Binding}"
+                                           TextWrapping="Wrap"
+                                           Margin="0 6" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

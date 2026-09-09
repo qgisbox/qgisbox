@@ -1,0 +1,101 @@
+<win:FAAppWindow xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:win="using:FluentAvalonia.UI.Windowing"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
+        xmlns:vm="using:qgisbox.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
+        x:Class="qgisbox.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="{Binding Title}"
+        Width="1200" Height="800"
+        MinWidth="760" MinHeight="560"
+        WindowStartupLocation="CenterScreen">
+
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <win:FAAppWindow.Styles>
+        <!-- 标题栏图标按钮:透明背景,悬停微亮 -->
+        <Style Selector="Button.titlebar">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Width" Value="44" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="4 0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="CornerRadius" Value="4" />
+        </Style>
+        <Style Selector="Button.titlebar:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+    </win:FAAppWindow.Styles>
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- 自定义标题栏:返回键 | 图标 | 标题 | 留白 | 最小化/最大化/关闭 -->
+        <Grid Name="TitleBarHost"
+              ColumnDefinitions="Auto,Auto,Auto,*"
+              Background="Transparent"
+              WindowDecorationProperties.ElementRole="TitleBar">
+            <Button Name="BackButton"
+                    Classes="titlebar"
+                    Click="BackButton_OnClick"
+                    IsEnabled="{Binding CanGoBack}"
+                    WindowDecorationProperties.ElementRole="User"
+                    ToolTip.Tip="返回">
+                <ui:FASymbolIcon Symbol="Back" FontSize="14" />
+            </Button>
+
+            <Image Grid.Column="1"
+                   Source="/Assets/avalonia-logo.ico"
+                   Width="18" Height="18"
+                   Margin="4 0"
+                   IsHitTestVisible="False"
+                   RenderOptions.BitmapInterpolationMode="HighQuality" />
+
+            <TextBlock Grid.Column="2"
+                       Text="{Binding Title}"
+                       FontSize="12.5"
+                       VerticalAlignment="Center"
+                       Margin="4 0"
+                       IsHitTestVisible="False" />
+        </Grid>
+
+        <!-- 左侧导航栏 + 内容区 -->
+        <ui:FANavigationView Grid.Row="1"
+                             Name="NavView"
+                             PaneDisplayMode="LeftCompact"
+                             OpenPaneLength="200"
+                             IsBackButtonVisible="False"
+                             IsSettingsVisible="False"
+                             AlwaysShowHeader="False"
+                             Content="{Binding CurrentPage}">
+            <ui:FANavigationView.MenuItems>
+                <ui:FANavigationViewItem Content="首页" Tag="home" IconSource="Home" />
+                <ui:FANavigationViewItem Content="工具" Tag="tool" IconSource="FourBars" />
+                <ui:FANavigationViewItem Content="关于" Tag="about">
+                    <ui:FANavigationViewItem.IconSource>
+                        <ui:FAPathIconSource Data="{StaticResource InfoIconGeometry}" />
+                    </ui:FANavigationViewItem.IconSource>
+                </ui:FANavigationViewItem>
+            </ui:FANavigationView.MenuItems>
+            <ui:FANavigationView.FooterMenuItems>
+                <!-- 左下角:明/暗主题切换 -->
+                <ui:FANavigationViewItem Content="切换主题"
+                                         Tag="theme"
+                                         SelectsOnInvoked="False"
+                                         ToolTip.Tip="切换明/暗主题">
+                    <ui:FANavigationViewItem.IconSource>
+                        <ui:FAPathIconSource Data="{StaticResource MoonIconGeometry}" />
+                    </ui:FANavigationViewItem.IconSource>
+                </ui:FANavigationViewItem>
+            </ui:FANavigationView.FooterMenuItems>
+        </ui:FANavigationView>
+    </Grid>
+
+</win:FAAppWindow>

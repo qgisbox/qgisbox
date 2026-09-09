@@ -1,0 +1,17 @@
+# .NET 构建产物
+bin/
+obj/
+out/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+
+# Avalonia
+*.axaml~
+
+# 系统文件
+Thumbs.db
+Desktop.ini
